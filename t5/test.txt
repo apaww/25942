@@ -1,5 +1,0 @@
-Line number one
-Line number two
-Line number three
-Line number four
-End of file
