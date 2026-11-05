@@ -73,51 +73,61 @@ int execvpe(const char *file, char *const argv[], char *const envp[]) {
     p = end + 1;
   }
 
+  printf("file not found\n");
+
   if (allocated) free(path);
   return -1;
 }
 
-int main() {
-  pid_t pid = fork();
+int main(int argc, char *argv[], char *envp[]) {
+  argc--;
+  argv = argv + 1;
 
-  if (pid < 0) {
-    perror("fork failed");
-    return EXIT_FAILURE;
-  } else if (pid == 0) {
-    char *file = "getopt";
-    char *argv[] = {file, "-v", NULL};
-    char *envp[] = {NULL};
-
-    printf("execvpe will run %s from PATH with NULL envp right now\n\n", file);
-    execvpe(file, argv, envp);
-
+  if (execvpe(argv[0], argv, envp) == -1) {
     perror("execvpe failed");
     return EXIT_FAILURE;
-  } else {
-    printf("\n----------\nexecvpe test 1\n----------\n");
-    wait(NULL);
-    printf("\n----------\ndone!\n");
   }
 
-  pid = fork();
+  // pid_t pid = fork();
+  //
+  // if (pid < 0) {
+  //   perror("fork failed");
+  //   return EXIT_FAILURE;
+  // } else if (pid == 0) {
+  //   char *file = "getopt";
+  //   char *argv[] = {file, "-v", NULL};
+  //   char *envp[] = {NULL};
+  //
+  //   printf("execvpe will run %s from PATH with NULL envp right now\n\n", file);
+  //   execvpe(file, argv, envp);
+  //
+  //   perror("execvpe failed");
+  //   return EXIT_FAILURE;
+  // } else {
+  //   printf("\n----------\nexecvpe test 1\n----------\n");
+  //   wait(NULL);
+  //   printf("\n----------\ndone!\n");
+  // }
 
-  if (pid < 0) {
-    perror("fork failed");
-    return EXIT_FAILURE;
-  } else if (pid == 0) {
-    char *file = "getopt";
-    char *argv[] = {file, "-v", NULL};
-
-    printf("execvpe will run %s from PATH with current envp right now\n\n", file);
-    execvpe(file, argv, environ);
-
-    perror("execvpe failed");
-    return EXIT_FAILURE;
-  } else {
-    printf("\n----------\nexecvpe test 2\n----------\n");
-    wait(NULL);
-    printf("\n----------\ndone!\n");
-  }
+  // pid = fork();
+  //
+  // if (pid < 0) {
+  //   perror("fork failed");
+  //   return EXIT_FAILURE;
+  // } else if (pid == 0) {
+  //   char *file = "getopt";
+  //   char *argv[] = {file, "-v", NULL};
+  //
+  //   printf("execvpe will run %s from PATH with current envp right now\n\n", file);
+  //   execvpe(file, argv, environ);
+  //
+  //   perror("execvpe failed");
+  //   return EXIT_FAILURE;
+  // } else {
+  //   printf("\n----------\nexecvpe test 2\n----------\n");
+  //   wait(NULL);
+  //   printf("\n----------\ndone!\n");
+  // }
 
   return EXIT_SUCCESS;
 }
