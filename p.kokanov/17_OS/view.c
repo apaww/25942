@@ -38,7 +38,8 @@ int main() {
 
   size_t len = 0, word = 0;
   char line[MAX_LINE];
-  while (true) {
+  setbuf(stdout, NULL);
+  while (1) {
     int ch = getchar();
 
     if (ch == EOF) break;
