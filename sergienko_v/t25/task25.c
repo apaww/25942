@@ -38,7 +38,7 @@ int main(int argc, char *argv[])
 
     if (pid == 0)
     {
-        // Child process - sends text
+        // Child
         close(fd[0]);
 
         const char *text = argv[1];
@@ -67,7 +67,7 @@ int main(int argc, char *argv[])
     }
     else
     {
-        // Parent process - receives text
+        // Parent
         close(fd[1]);
 
         while (1)

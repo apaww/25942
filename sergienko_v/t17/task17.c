@@ -111,7 +111,7 @@ int main(void)
         }
         if (n == 0) break;
 
-        // Ignore escape sequences (arrows, function keys)
+        //
         if (escape == 1)
         {
             if (c == '[' || c == 'O') escape = 2;

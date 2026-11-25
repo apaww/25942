@@ -25,14 +25,14 @@ int main(int argc, char *argv[])
             continue;
         }
 
-        // File type
+        // type
         char type;
 
         if (S_ISDIR(st.st_mode)) type = 'd';
         else if (S_ISREG(st.st_mode)) type = '-';
         else type = '?';
 
-        // Permissions
+        // permissions
         char permissions[10];
 
         mode_t bits[9] = {
@@ -50,7 +50,7 @@ int main(int argc, char *argv[])
 
         permissions[9] = '\0';
 
-        // Owner and group
+        // owner, group
         struct passwd *pw = getpwuid(st.st_uid);
         struct group *gr = getgrgid(st.st_gid);
 
@@ -67,7 +67,7 @@ int main(int argc, char *argv[])
         else
             snprintf(group, sizeof(group), "%lu", (unsigned long)st.st_gid);
 
-        // File size
+        // size
         char size[32] = "";
 
         if (S_ISREG(st.st_mode))
@@ -75,7 +75,7 @@ int main(int argc, char *argv[])
             snprintf(size, sizeof(size), "%lld", (long long)st.st_size);
         }
 
-        // Modification time
+        // time
         char date[32] = "";
         struct tm *tm_info = localtime(&st.st_mtime);
 
@@ -84,7 +84,7 @@ int main(int argc, char *argv[])
             strftime(date, sizeof(date), "%Y-%m-%d %H:%M", tm_info);
         }
 
-        // File name without path
+        // name
         size_t end = strlen(path);
 
         while (end > 1 && path[end - 1] == '/')
@@ -104,7 +104,6 @@ int main(int argc, char *argv[])
             name_length = 1;
         }
 
-        // Print information
         printf("%c%s %3lu %-12s %-12s %10s %16s %.*s\n",
                type, permissions, (unsigned long)st.st_nlink, owner, group, size, date, name_length, name);
     }
