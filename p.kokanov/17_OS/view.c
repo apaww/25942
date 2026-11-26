@@ -25,6 +25,8 @@ int main() {
 
   struct termios new_term = old_term;
   new_term.c_lflag &= ~ICANON & ~ECHO;
+  new_term.c_cc[VMIN] = 1;
+  new_term.c_cc[VTIME] = 0;
 
   if (tcsetattr(STDIN_FILENO, TCSANOW, &new_term) != 0) {
     perror("tcsetattr failed");

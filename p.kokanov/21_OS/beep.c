@@ -20,6 +20,8 @@ int main() {
   new_term.c_lflag &= ~(ISIG | ICANON);
   char vintr = new_term.c_cc[VINTR];
   char vquit = new_term.c_cc[VQUIT];
+  new_term.c_cc[VMIN] = 1;
+  new_term.c_cc[VTIME] = 0;
 
   if (tcsetattr(STDIN_FILENO, TCSANOW, &new_term) == -1) {
     perror("tcsetattr failed");
