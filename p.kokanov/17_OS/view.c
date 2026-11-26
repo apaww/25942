@@ -55,6 +55,7 @@ int main() {
       }
 
       putchar('\a');
+      continue;
     }
 
     if (ch == erasec) {
